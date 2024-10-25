@@ -25,6 +25,10 @@ RSpec.describe Users::SessionsController, type: :request do
       post "/login", params: {user:{email:"invalid@gmail.com",password:"password"}}
 
       expect(response).to have_http_status(401)
+      json_response = response.body
+      expect(json_response).to eq("Invalid Email or password.")
+
+
     end
 
 
