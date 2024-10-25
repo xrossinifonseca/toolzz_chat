@@ -19,6 +19,15 @@ RSpec.describe Users::SessionsController, type: :request do
       expect(json_response['status']['data']['user']['email']).to eq(UserSerializer.new(user).serializable_hash[:data][:attributes][:email])
       expect(response.headers['Authorization']).not_to be_nil
     end
+
+
+    it "return status 401 if credentials are wrong" do
+      post "/login", params: {user:{email:"invalid@gmail.com",password:"password"}}
+
+      expect(response).to have_http_status(401)
+    end
+
+
   end
 
   describe 'DELETE #destroy (logout)' do
